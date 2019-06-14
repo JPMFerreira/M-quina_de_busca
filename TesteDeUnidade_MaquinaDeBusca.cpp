@@ -1,10 +1,4 @@
-// Copyright 2018 Universidade Federal de Minas Gerais (UFMG)
-//
-// Lista de exercícios sobre Tipos Abstratos de Dados.
-// Aplicação: Números MaquinaDeBuscas - Coordenadas Euclidianas.
-
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
-//#include "maquina_de_busca.h"
 #include "doctest.h"
 #include <iostream>
 #include <vector>
@@ -23,29 +17,17 @@ public:
   {
     return TESTE.palavras_;
   }
-  static vector<string> nome_documentos()
+  static map<string, double> idf(const vector<string> TESTE)
   {
-    return nome_documentos_;
+    return TESTE.idf_;
   }
-  static map<string,vector<string>> m_DocPalavras()
+  static map<string,map<string,double>> coord(const vector<string> TESTE)
   {
-    return  m_DocPalavras;
+    return TESTE.coord_;
   }
-  static map<string, int> max_frequencia()
+  static map<string,map<string,int>> indiceInvertido(const vector<string> TESTE)
   {
-    return max_frequencia;
-  }
-  static map<string, double> idf()
-  {
-    return idf_;
-  }
-  static map<string,vector<double>> hash()
-  {
-    return hash_;
-  }
-  static map<string,map<string,int>> indiceInvertido()
-  {
-    return indiceInvertido_;
+    return TESTE.indiceInvertido_;
   }
 };
 
@@ -138,34 +120,63 @@ TEST_SUITE("MaquinaDeBusca") {
         i++;
     }
     MaquinaDeBusca TESTE(parametro);
-    TESTE.IndiceInvertido();
-    
-
+    CHECK(Teste::indiceInvertido(TESTE) == TESTE.IndiceInvertido());
   }
 
   TEST_CASE("MaquinaDeBusca::idf()") {
-
+    ifstream arq_teste("arq_teste.txt");
+    vector<string> parametro;
+    string aux;
+    int i=0;
+    while(!arq_teste.eof()){
+        arq_teste >> aux;
+        parametro.push_back(aux);
+        aux.clear();
+        parametro[i] = Tratar(parametro[i]);
+        i++;
+    }
+    MaquinaDeBusca TESTE(parametro);
+    TESTE.IndiceInvertido();
+    TESTE.idf();
+    (CHECK Teste::idf(TESTE) != NULL);
   }
 
-  TEST_CASE("MaquinaDeBusca::get_Palavras()"){
-    
+  TEST_CASE("MaquinaDeBusca::Coordenadas()") {
+    ifstream arq_teste("arq_teste.txt");
+    vector<string> parametro;
+    string aux;
+    int i=0;
+    while(!arq_teste.eof()){
+        arq_teste >> aux;
+        parametro.push_back(aux);
+        aux.clear();
+        parametro[i] = Tratar(parametro[i]);
+        i++;
+    }
+    MaquinaDeBusca TESTE(parametro);
+    TESTE.IndiceInvertido();
+    TESTE.idf();
+    TESTE.Coordenadas();
+    (CHECK Teste::coord(TESTE) != NULL);
   }
 
-  TEST_CASE("MaquinaDeBusca::get_DocPalavras()"){
-    
-  }
-
-  TEST_CASE("MaquinaDeBusca::get_Hash()") {
-    
-  }
-
-  TEST_CASE("MaquinaDeBusca::get_IndiceInvertido()") {
-    
-  }
-
-  TEST_CASE("MaquinaDeBusca::get_idf(string palavra)") {
-    
-  }
-
+  TEST_CASE("MaquinaDeBusca::Buscador())") {
+    ifstream arq_teste("arq_teste.txt");
+    vector<string> parametro;
+    string aux;
+    int i=0;
+    while(!arq_teste.eof()){
+        arq_teste >> aux;
+        parametro.push_back(aux);
+        aux.clear();
+        parametro[i] = Tratar(parametro[i]);
+        i++;
+    }
+    MaquinaDeBusca TESTE(parametro);
+    TESTE.IndiceInvertido();
+    TESTE.idf();
+    TESTE.Coordenadas();
+    (CHECK Teste::coord(TESTE) != NULL);
+  } 
  
 }

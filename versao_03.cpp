@@ -6,6 +6,7 @@
 #include <string>
 #include <map>
 #include <cmath>
+#include <dirent.h>
 
 using namespace std;
 
@@ -14,7 +15,6 @@ void imprimir(map<string, int> i){
     for(auto h : i){
         cout << h.first <<"," <<h.second << endl;
 }
-
 }
 void imprimir(map<string,vector<string>> i){
     for(auto h : i){
